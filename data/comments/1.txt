@@ -1,0 +1,34 @@
+Config folder contains the configuration of the project. The database is file-based, SQLite (stored at \data\test.db).
+\src\Factory\ReaderWriterTrain.php is a trait that contains a static function createInstance which checks if a given class is in the namespace. If it is, then it returns an instance of that class, else throws an error.
+
+\src\Reader\ReaderFactory.php has only one function - create, which is used to create an instance of class that implements ReaderInterface. It takes classname and params.
+
+\src\Reader\ReaderInterface.php is an interface(functions to be written). It contains only one function - read(). Read() returns  null or an array.
+
+\src\Reader\Db\Product.php has to do with table named products in the databse. It uses Doctrine (Object Relational Mapper) so that it is easy to get information from the db.
+
+\src\Processor\ProcessorInterface.php defines that every processor will have a function named processing().
+
+\src\Processor\AbstractProcessor.php is an abstract class that defines the structure of processors (there are 2 of them: YieldProcessor and ReadWriteProcessor) and cannot be instantiated. Each processor reader, writer and logger. The  AbstractProcessor.php also contains explicit getters and setters.
+
+ReadWriteProcessor.php reads items from the db and writes them out, or logs an error if present.
+
+YieldProcessor.php reads items from the db and return the needed amount of items.
+
+ConsoleLogger.php is a logger that sends messages about exceptions that occured.
+
+\src\Writer\File\Csv.php has to do with saving the data retrived from the DB to a .CSV file.
+
+Html class defined in \src\Writer\Html.php creates a table to display in a browser.
+
+ConsoleOutput class implements WriterInterface and writes to the console.
+
+Stub is a dummy class which implements WriterInterface, but it doesn't have any actual implementations yet.
+
+\src\Writer\WriterFactory.php is similar to ReaderFactory
+
+\src\Writer\WriterInterface.php defines that every writer must have a function called write().
+
+\vendor\ contains third-party libraries and modules.
+
+web.php and cli.php instantiate processors(namely, web.php - YieldProcessor and cli.php - ReadWriteProcessor).
