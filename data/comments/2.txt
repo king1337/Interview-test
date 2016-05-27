@@ -1,0 +1,1 @@
+php cli.php DB\Product ConsoleOutput > data/2.txt
