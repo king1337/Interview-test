@@ -4,14 +4,16 @@ namespace OpsWay\Migration\Writer\File;
 
 use OpsWay\Migration\Writer\WriterInterface;
 
+
 class Csv implements WriterInterface
 {
     protected $file;
     protected $filename;
 
-    public function __construct()
+    public function __construct($params)
     {
-        $this->checkFileName();
+		$this->filename = $params['filename'];
+		$this->checkFileName();
     }
 
     /**
@@ -22,12 +24,14 @@ class Csv implements WriterInterface
     public function write(array $item)
     {
         if (!$this->file) {
+			
             if (!($this->file = fopen($this->filename, 'w+'))) {
                 throw new \RuntimeException(sprintf('Can not create file "%s" for writing data.', $this->filename));
             }
             fputcsv($this->file, array_keys($item));
         }
         return fputcsv($this->file, $item);
+		
     }
 
     public function __destruct()
